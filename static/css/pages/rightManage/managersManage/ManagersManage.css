@@ -1,0 +1,19 @@
+.managers-manage {
+    width: 100%;
+    height: 100%;
+
+}
+.managers-action {
+    width: 100%;
+    height: 50px;
+    border-left: 5px solid #1AA094;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+.managers-table {
+    width: 100%;
+    padding: 20px 10px 0px 10px;
+    box-sizing: border-box;
+}

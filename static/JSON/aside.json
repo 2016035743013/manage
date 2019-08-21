@@ -1,0 +1,47 @@
+[
+    {
+        "icon": "el-icon-s-home",
+        "path": "/",
+        "name": "首页"
+    },
+    {
+        "icon": "el-icon-menu",
+        "path": "",
+        "name": "组织管理",
+        "sub": [
+            {
+                "icon": "",
+                "path": "/staffManage",
+                "name": "用户管理"
+            },
+            {
+                "icon": "",
+                "path": "/organizationManage",
+                "name": "机构管理"
+            },
+            {
+                "icon": "",
+                "path": "/positionManage",
+                "name": "岗位管理"
+            }
+        ]
+    },
+    {
+        "icon": "el-icon-user-solid",
+        "path": "",
+        "name": "权限管理",
+        "sub": [
+            {
+                "icon": "",
+                "path": "/roleManage",
+                "name": "角色管理"
+            },
+            {
+                "icon": "",
+                "path": "/managersManage",
+                "name": "系统管理员"
+            }
+        ]
+    }
+    
+]

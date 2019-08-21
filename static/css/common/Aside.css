@@ -1,0 +1,16 @@
+.aside {
+    width: 100%;
+    overflow-y: scroll;
+    user-select: none;
+}
+.aside>ul{
+    height: 100%;
+}
+.aside::-webkit-scrollbar {
+    width: 0px;
+    display: none;
+}
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 250px;
+    height: 100%;
+}

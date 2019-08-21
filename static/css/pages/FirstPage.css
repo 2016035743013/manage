@@ -1,0 +1,78 @@
+.firstpage {
+    width: 100%;
+    height: 100%;   
+}
+.content {
+    width: 100%;
+    padding: 10px 10px 0px 10px;
+    box-sizing: border-box;
+}
+.content-bar {
+    width: 100%;
+    height: 50px;
+    background: #019688;
+    text-align: left;
+    line-height: 50px;
+    padding-left: 20px;
+    box-sizing: border-box;
+    color: white;
+}
+.content-canshu {
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.canshu-item {
+    width: 250px;
+    height: 100px;
+    background: #3A3E4A;
+    margin: 10px 10px 10px 0px;
+    border-radius: 10px;
+    display: flex;
+}
+.canshu-item:nth-child(2) {
+    background: #409EFF;
+}
+.canshu-item:nth-child(3) {
+    background: #019688;
+}
+.canshu-item:nth-child(4) {
+    background: #67C23A;
+}
+
+.item-left {
+    width: 50%;
+    height: 100%;
+    color: white;
+    /* background: #3A3E4A; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.item-left>i {
+    font-size: 35px;
+}
+.item-right {
+    width: 50%;
+    height: 100%;
+    color: white;
+}
+.item-right span {
+    width: 100%;
+    height: 50%;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.item-right span:nth-child(2) {
+    font-size: 15px;
+}
+.content-chars {
+    margin-top: 30px;
+    width: 100%;
+}
