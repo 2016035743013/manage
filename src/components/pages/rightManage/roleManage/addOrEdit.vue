@@ -81,7 +81,6 @@ export default {
           } else {
             data.id = this.tableCeilData.objectId;
             addOrEditRole(data).then(res => {
-              // console.log(res);
               this.$message({
                 message: "修改员工信息成功",
                 type: "success"
@@ -90,7 +89,6 @@ export default {
             });
           }
         } else {
-          console.log("error submit!!");
           return false;
         }
       });

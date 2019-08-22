@@ -25,7 +25,6 @@ function deleteData(table, id) {
     return new Promise((resolve, rejected) => {
         const query = Bmob.Query(table);
         query.destroy(id).then(res => {
-            console.log(res);
             resolve(res);
         }).catch(err => {
             rejected(err);

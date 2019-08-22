@@ -75,7 +75,6 @@ export default {
       let objectIdArr = this.selectData.map(val => {
         return val.objectId;
       });
-      // console.log(objectIdArr);
       if (objectIdArr.length <= 0) {
         this.$message({
           message: "请选择要删除的选项",
@@ -132,7 +131,6 @@ export default {
       this.addOrEdit = false;
     },
     confirm(type) {
-      console.log(type);
       this.closePanel();
       if (type == "add") {
         this.getData();

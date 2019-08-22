@@ -5,8 +5,7 @@ import {
 } from './BombHttp'
 function getPositionData(rank) {
     return getData('positionManage').then(res => {
-        res = res.filter((val) => {
-            console.log(val.rank);
+        res = res.filter((val) => { 
             return val.rank.search(rank) != -1;
         })
         res.reverse();

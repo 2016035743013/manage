@@ -72,7 +72,6 @@ export default {
           } else {
             data.id = this.tableCeilData.objectId;
             addEditOrganization(data).then(res => {
-              // console.log(res);
               this.$message({
                 message: "修改成功",
                 type: "success"
@@ -81,7 +80,6 @@ export default {
             });
           }
         } else {
-          console.log("error submit!!");
           return false;
         }
       });

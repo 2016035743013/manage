@@ -112,7 +112,6 @@ export default {
           });
         })
         .catch(err => {
-          console.log(err);
           this.$message({
             message: "取消删除"
           });
@@ -128,7 +127,6 @@ export default {
       this.addOrEdit = false;
     },
     confirm(type) {
-      console.log(type);
       this.closePanel();
       if (type == "add") {
         this.getData(this.organizationVal, "");
@@ -136,7 +134,6 @@ export default {
     },
     // 多选框选中触发
     handleSelectionChange(selectData) {
-      // console.log(selectData);
       this.selectData = selectData;
     },
     selectHandle() {
@@ -145,7 +142,6 @@ export default {
     },
     getData(organization, keyword) {
       getStaffData(organization, keyword, this.pageNum).then(res => {
-        // console.log(res);
         this.tableData = res;
         this.$nextTick(() => {
           this.loadingInstance.close();
@@ -153,7 +149,6 @@ export default {
         
       });
       getOrganizationData().then(res => {
-        //   console.log(res);
         this.organization = [];
         res.map((val, index) => {
           this.organization[index] = val.name;
@@ -168,7 +163,6 @@ export default {
       let objectIdArr = this.selectData.map(val => {
         return val.objectId;
       });
-      // console.log(objectIdArr);
       if (objectIdArr.length <= 0) {
         this.$message({
           message: "请选择要删除的选项",
@@ -206,13 +200,11 @@ export default {
       this.getData(this.organizationVal, this.keyword);
     },
     listenInput() {
-      // console.log('test');
       if (this.keyword == "") {
         this.getData(this.organizationVal, "");
       }
     },
     getCurPage(val) {
-      console.log(val);
       this.pageNum = val - 1;
       this.getData("", "");
     }

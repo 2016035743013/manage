@@ -13,8 +13,21 @@ export default {
   },
   mounted() {
     // console.log();
-    if( !window.localStorage.getItem('bmob')) {
-      this.$router.push('/login');
+    if (!window.localStorage.getItem("bmob")) {
+      this.$router.push("/login");
+    }
+    // console.log();
+    let routes = window.localStorage.getItem("routes");
+    let activePath = window.localStorage.getItem('activePath');
+    let userInfo = window.localStorage.getItem('bmob');
+    if (routes) {
+      this.$store.commit("setRoutes", JSON.parse(routes));
+    }
+    if (activePath) {
+      this.$store.commit('setActivePath', activePath);
+    }
+    if (userInfo) {
+      this.$store.commit('setUserInfo', JSON.parse(userInfo));
     }
   }
 };

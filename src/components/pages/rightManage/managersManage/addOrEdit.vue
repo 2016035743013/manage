@@ -87,7 +87,6 @@ export default {
               });
               this.$emit("confirm", "add");
             }).catch(err => {
-              console.log(err);
               this.$message({
                 type: 'warning',
                 message: err.error
@@ -96,7 +95,6 @@ export default {
           } else {
             data.id = this.tableCeilData.objectId;
             addOrEditManager(data).then(res => {
-              // console.log(res);
               this.$message({
                 message: "修改管理员信息成功",
                 type: "success"
@@ -105,7 +103,6 @@ export default {
             });
           }
         } else {
-          console.log("error submit!!");
           return false;
         }
       });

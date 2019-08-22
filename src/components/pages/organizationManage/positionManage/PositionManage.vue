@@ -108,7 +108,6 @@ export default {
       this.addOrEdit = false;
     },
     confirm(type) {
-      console.log(type);
       this.closePanel();
       if (type == "add") {
         this.getData();
@@ -116,7 +115,6 @@ export default {
     },
     // 多选框选中触发
     handleSelectionChange(selectData) {
-      // console.log(selectData);
       this.selectData = selectData;
     },
     selectHandle() {

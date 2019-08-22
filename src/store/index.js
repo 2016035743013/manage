@@ -3,9 +3,9 @@ import Vuex from 'vuex'
 Vue.use(Vuex);
 let store = new Vuex.Store({
     state: {
-        routes: JSON.parse(window.localStorage.getItem('routes')) ? JSON.parse(window.localStorage.getItem('routes')) : [],//路由
-        activePath: window.localStorage.getItem('activePath') ? window.localStorage.getItem('activePath') : '/',//被选中的路由下标
-        userInfo: JSON.parse(window.localStorage.getItem('bmob')) ? JSON.parse(window.localStorage.getItem('bmob')) : '' ,//用户信息
+        routes: [],//路由
+        activePath: '/',//被选中的路由下标
+        userInfo:  '' ,//用户信息
     },
     getters: {
         getActivePath(state) {
@@ -58,6 +58,9 @@ let store = new Vuex.Store({
             }
             state.routes = temp;
             window.localStorage.setItem('routes', JSON.stringify(state.routes));
+        },
+        setRoutes(state, val) {
+            state.routes = val;
         },
         // 设置被选中的路由路径
         setActivePath(state, val) {

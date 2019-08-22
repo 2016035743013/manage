@@ -84,7 +84,6 @@ export default {
       let objectIdArr = this.selectData.map(val => {
         return val.objectId;
       });
-      // console.log(objectIdArr);
       if (objectIdArr.length <= 0) {
         this.$message({
           message: "请选择要删除的选项",
@@ -112,7 +111,6 @@ export default {
     },
     // 多选框选中触发
     handleSelectionChange(selectData) {
-      // console.log(selectData);
       this.selectData = selectData;
     },
     handleEdit(index, data) {
@@ -134,7 +132,6 @@ export default {
           });
         })
         .catch(err => {
-          console.log(err);
           this.$message({
             message: "取消删除"
           });
