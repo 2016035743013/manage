@@ -4,7 +4,7 @@
       <div class="content">
         <div class="content-bar">亲爱的{{userInfo.nickname}}，您好！ 欢迎使用后台管理模板。当前时间为： {{curTime}}</div>
         <div class="content-canshu">
-          <div class="canshu-item" v-for="(item, index) in canshu" :key="index">
+          <div class="canshu-item" v-for="(item, index) in canshu" :key="index" @click="turnToGithub(index)">
             <div class="item-left">
               <i class="iconfont" :class="[item.icon]"></i>
             </div>
@@ -15,8 +15,8 @@
           </div>
         </div>
         <div class="content-chars">
-          <ve-line :data="chartData" :settings="chartSettings"></ve-line>
-          <ve-histogram :data="lineData"></ve-histogram>
+          <ve-line :data="chartData" ></ve-line>
+          <ve-histogram :data="lineData" :settings="chartSettings"></ve-histogram>
         </div>
       </div>
     </vuescroll>
@@ -27,6 +27,11 @@ import { Loading } from "element-ui";
 export default {
   name: "firstpage",
   data() {
+    this.chartSettings = {
+      axisSite: { right: ["下单率"] },
+      yAxisType: ["KMB", "percent"],
+      yAxisName: ["数值", "比率"]
+    };
     return {
       curTime: "",
       canshu: [
@@ -51,7 +56,6 @@ export default {
           text: "0"
         }
       ],
-      chartSettings: {},
       chartData: {
         columns: ["日期", "访问用户", "下单用户"],
         rows: [
@@ -84,6 +88,11 @@ export default {
         this.curTime = new Date().toLocaleString();
         this.getCurTime();
       }, 1000);
+    },
+    turnToGithub(index) {
+        if(index == 0) {
+            window.open('https://github.com/2016035743013/manage', 'blank')
+        }
     }
   },
   created() {
