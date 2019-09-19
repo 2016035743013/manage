@@ -40,6 +40,7 @@
 <script>
 import https from "../../tools/https";
 import bus from "../../tools/bus";
+import vuescroll from 'vuescroll'
 export default {
   name: "managerAside",
   data() {

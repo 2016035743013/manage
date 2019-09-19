@@ -13,12 +13,17 @@
         </el-form-item>
         <el-form-item label="职位" prop="organization">
           <el-select v-model="rulForm.rank" placeholder="请选择">
-            <el-option v-for="item in rank" :key="item" :label="item" :value="item"></el-option>
+            <el-option v-for="(item, index) in rank" :key="index" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="岗位分类" prop="organization">
           <el-select v-model="rulForm.organization" placeholder="请选择">
-            <el-option v-for="item in organization" :key="item" :label="item" :value="item"></el-option>
+            <el-option
+              v-for="(item, index) in organization"
+              :key="index"
+              :label="item"
+              :value="item"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="手机号码" prop="phone">
@@ -36,11 +41,12 @@
   </div>
 </template>
 <script>
-import { getOrganizationData } from "../../../../Api/organizationManageApi/organizationManageApi";
-import { addOrEditStaff } from "../../../../Api/organizationManageApi/staffManageApi";
+import { getOrganizationData, editOrganization } from "../../../../Api/organizationManageApi/organizationManageApi";
 import {
-  getPositionData
-} from "../../../../Api/organizationManageApi/positionManageApi";
+  addStaff,
+  editStaff
+} from "../../../../Api/organizationManageApi/staffManageApi";
+import { getPositionData } from "../../../../Api/organizationManageApi/positionManageApi";
 export default {
   name: "addOrEdit",
   data() {
@@ -80,10 +86,10 @@ export default {
             organization: this.rulForm.organization,
             email: this.rulForm.email,
             phone: this.rulForm.phone,
-            rank: this.rulForm.rank,
+            rank: this.rulForm.rank
           };
           if (this.title == "添加员工") {
-            addOrEditStaff(data).then(res => {
+            addStaff(data).then(res => {
               this.$message({
                 message: "添加成功",
                 type: "success"
@@ -91,8 +97,8 @@ export default {
               this.$emit("confirm", "add");
             });
           } else {
-            data.id = this.tableCeilData.objectId;
-            addOrEditStaff(data).then(res => {
+            data.objectId = this.tableCeilData.objectId;
+            editStaff(data).then(res => {
               this.$message({
                 message: "修改员工信息成功",
                 type: "success"
@@ -112,11 +118,11 @@ export default {
           this.organization[index] = val.name;
         });
       });
-      getPositionData('').then(res => {
+      getPositionData("").then(res => {
         this.rank = [];
         res.map((val, index) => {
           this.rank[index] = val.name;
-        })
+        });
       });
     }
   },

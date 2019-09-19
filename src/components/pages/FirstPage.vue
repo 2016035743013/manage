@@ -23,7 +23,6 @@
   </div>
 </template>
 <script>
-import { Loading } from "element-ui";
 export default {
   name: "firstpage",
   data() {
@@ -96,7 +95,7 @@ export default {
     }
   },
   created() {
-    this.loadingInstance = Loading.service({
+    this.loadingInstance = this.$loading({
       fullscreen: true,
       background: "rgba(0,0,0,0.5)"
     });

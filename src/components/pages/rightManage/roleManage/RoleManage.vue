@@ -1,6 +1,6 @@
 <template>
   <div class="role-manage">
-    <vuescroll>
+    <!-- <vuescroll> -->
       <div class="role-action">
         <el-button type="primary" @click="addRole">添加</el-button>
         <el-button type="danger" @click="batDelRoel">批量删除</el-button>
@@ -45,24 +45,27 @@
         @confirm="confirm"
         :tableCeilData="tableCeilData"
       />
-    </vuescroll>
+    <!-- </vuescroll> -->
   </div>
 </template>
 <script>
-import addOrEdit from './addOrEdit'
-import { getRoleData, delRole } from "../../../../Api/rightManage/roleManageApi";
-import { Loading } from "element-ui";
+import addOrEdit from "./addOrEdit";
+import {
+  getRoleData,
+  delRole
+} from "../../../../Api/rightManage/roleManageApi";
 export default {
   name: "roleManage",
   components: {
-      addOrEdit
+    addOrEdit
   },
   data() {
     return {
       tableData: [],
       addOrEdit: false,
       title: "",
-      tableCeilData: {}
+      tableCeilData: {},
+      selectData: [] //复选框选中的数据
     };
   },
   methods: {
@@ -83,7 +86,7 @@ export default {
     batDelRoel() {
       let objectIdArr = this.selectData.map(val => {
         return val.objectId;
-      }); 
+      });
       if (objectIdArr.length <= 0) {
         this.$message({
           message: "请选择要删除的选项",
@@ -96,10 +99,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          for (let i = 0; i < objectIdArr.length; i++) {
-            promiseArr.push(delRole(objectIdArr[i]));
-          }
-          Promise.all(promiseArr).then(() => {
+          delRole(objectIdArr).then(() => {
             this.getData();
             this.$message({
               message: "删除成功",
@@ -123,7 +123,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          delRole(data.objectId).then(res => {
+          delRole([data.objectId]).then(res => {
             this.getData();
             this.$message({
               message: "删除成功",
@@ -147,7 +147,7 @@ export default {
     }
   },
   mounted() {
-    this.loadingInstance = Loading.service({
+    this.loadingInstance = this.$loading({
       fullscreen: true,
       background: "rgba(0,0,0,0.5)"
     });

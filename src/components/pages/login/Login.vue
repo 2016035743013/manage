@@ -16,6 +16,7 @@
   </div>
 </template>
 <script>
+import { login } from "../../../Api/login";
 export default {
   name: "login",
   data() {
@@ -41,20 +42,32 @@ export default {
         });
         return;
       }
-      Bmob.User.login(this.username, this.password)
-        .then(res => {
-        //   console.log(res);
-            this.$store.commit('setUserInfo', res);
-            this.$router.push("/");
-        })
-        .catch(err => {
-        //   console.log(err);
-            this.$alert('用户名或密码错误，请重新输入！！！','提示',{
-                type: 'warning',
-                callback: action => {}
-            })
-        });
-      
+      login({ username: this.username, password: this.password }).then(res => {
+        console.log(res);
+        if (res.code == "200") {
+          this.$store.commit("setUserInfo", res.data[0]);
+          window.localStorage.setItem('bmob', JSON.stringify(res.data[0]));
+          this.$router.push("/");
+        } else {
+          this.$alert(res.msg, "提示", {
+            type: "warning",
+            callback: action => {}
+          });
+        }
+      });
+      // Bmob.User.login(this.username, this.password)
+      //   .then(res => {
+      //     //   console.log(res);
+      //     this.$store.commit("setUserInfo", res);
+      //     this.$router.push("/");
+      //   })
+      //   .catch(err => {
+      //     //   console.log(err);
+      //     this.$alert("用户名或密码错误，请重新输入！！！", "提示", {
+      //       type: "warning",
+      //       callback: action => {}
+      //     });
+      //   });
     },
     setWinHeight() {
       let winHeight = this.$(window).height();

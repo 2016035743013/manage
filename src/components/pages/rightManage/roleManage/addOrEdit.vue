@@ -30,7 +30,7 @@
   </div>
 </template>
 <script>
-import { addOrEditRole } from '../../../../Api/rightManage/roleManageApi'
+import { addRole, editRole } from "../../../../Api/rightManage/roleManageApi";
 export default {
   name: "addOrEdit",
   data() {
@@ -71,7 +71,7 @@ export default {
             remark: this.rulForm.remark
           };
           if (this.title == "添加角色") {
-            addOrEditRole(data).then(res => {
+            addRole(data).then(res => {
               this.$message({
                 message: "添加成功",
                 type: "success"
@@ -79,8 +79,8 @@ export default {
               this.$emit("confirm", "add");
             });
           } else {
-            data.id = this.tableCeilData.objectId;
-            addOrEditRole(data).then(res => {
+            data.objectId = this.tableCeilData.objectId;
+            editRole(data).then(res => {
               this.$message({
                 message: "修改员工信息成功",
                 type: "success"

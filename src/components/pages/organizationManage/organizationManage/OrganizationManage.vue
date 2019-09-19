@@ -1,6 +1,6 @@
 <template>
   <div class="organization">
-    <vuescroll>
+    <!-- <vuescroll> -->
       <div class="organization-action">
         <el-button type="primary" @click="addOrganization">添加</el-button>
         <el-button type="danger" @click="batDelOrganization">批量删除</el-button>
@@ -44,7 +44,7 @@
         @confirm="confirm"
         :tableCeilData="tableCeilData"
       />
-    </vuescroll>
+    <!-- </vuescroll> -->
   </div>
 </template>
 <script>
@@ -53,7 +53,6 @@ import {
   delOrganization
 } from "../../../../Api/organizationManageApi/organizationManageApi";
 import addOrEdit from "./addOrEdit";
-import { Loading } from "element-ui";
 export default {
   name: "organizationManage",
   data() {
@@ -87,10 +86,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          for (let i = 0; i < objectIdArr.length; i++) {
-            promiseArr.push(delOrganization(objectIdArr[i]));
-          }
-          Promise.all(promiseArr).then(() => {
+          delOrganization(objectIdArr).then(() => {
             this.getData();
             this.$message({
               message: "删除成功",
@@ -113,7 +109,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          delOrganization(data.objectId).then(res => {
+          delOrganization([data.objectId]).then(res => {
             this.getData();
             this.$message({
               message: "删除成功",
@@ -149,7 +145,7 @@ export default {
     addOrEdit
   },
   mounted() {
-    this.loadingInstance = Loading.service({
+    this.loadingInstance = this.$loading({
       fullscreen: true,
       background: "rgba(0,0,0,0.5)"
     });

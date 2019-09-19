@@ -1,22 +1,22 @@
-import {
-    getData,
-    addOrEdit,
-    deleteData
-} from './BombHttp'
+
+import { get, post, del, put } from './http';
 function getOrganizationData() {
-    return getData('organizationManage').then(res => {
-        res.reverse();
-        return res;
-    });
+    return get({ url: '/organizationManage' })
 }
-function addEditOrganization(data) {
-    return addOrEdit('organizationManage', data);
+function addOrganization(data) {
+    return post({ data, url: '/organizationManage' });
+}
+function editOrganization(data) {
+    console.log(data);
+    return put({ data, url: '/organizationManage' });
 }
 function delOrganization(id) {
-    return deleteData('organizationManage', id);
+    return del({ data: { objectId: JSON.stringify(id) }, url: '/organizationManage' });
+    // {data: {objectId: JSON.stringify(id)}, url: '/positionManage'}
 }
 export {
     getOrganizationData,
-    addEditOrganization,
+    addOrganization,
+    editOrganization,
     delOrganization
 }

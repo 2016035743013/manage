@@ -1,25 +1,21 @@
-import {
-    getData,
-    addOrEdit,
-    deleteData
-} from '../organizationManageApi/BombHttp'
+
+import {get, post, put, del} from '../organizationManageApi/http'
 function getRoleData() {
-    return getData('roleManage').then((res) => {
-        return res;
-    })
+    return get({url: '/rolemanage'});
 }
-function addOrEditRole(data) {
-    return addOrEdit('roleManage', data).then((res) => {
-        return res;
-    })
+
+function addRole(data) {
+    return post({data, url: '/rolemanage'});
+}
+function editRole(data) {
+    return put({data, url: '/rolemanage'});
 }
 function delRole(id) {
-    return deleteData('roleManage', id).then((res) => {
-        return res;
-    })
+    return del({data: {objectId: JSON.stringify(id)}, url: '/rolemanage'});
 }
 export {
     getRoleData,
-    addOrEditRole,
+    addRole,
+    editRole,
     delRole
 }

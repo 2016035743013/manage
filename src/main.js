@@ -1,12 +1,77 @@
 import 'babel-polyfill'
 import Vue from 'vue'
-import VCharts from 'v-charts'
-Vue.use(VCharts)
+import VeLine from 'v-charts/lib/line.common'
+import histogram from 'v-charts/lib/histogram.common'
+Vue.component(VeLine.name, VeLine);
+Vue.component(histogram.name, histogram);
+
 import App from './App'
 
-import ElementUI  from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(ElementUI);
+import {
+  Menu,
+  Submenu,
+  MenuItem,
+  MenuItemGroup,
+  Tooltip,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
+  Dialog,
+  Form,
+  FormItem,
+  Button,
+  Input,
+  Alert,
+  Table,
+  TableColumn,
+  Container,
+  Header,
+  Aside,
+  Main,
+  Message,
+  MessageBox,
+  Tabs,
+  TabPane,
+  Radio,
+  Select,
+  pagination,
+  Option,
+  Loading,
+} from 'element-ui';
+Vue.use(Menu);
+Vue.use(Select);
+Vue.use(pagination);
+Vue.use(Option);
+Vue.use(Tabs);
+Vue.use(TabPane);
+Vue.use(Submenu);
+Vue.use(MenuItem);
+Vue.use(MenuItemGroup);
+Vue.use(Tooltip);
+Vue.use(Dropdown);
+Vue.use(DropdownMenu);
+Vue.use(DropdownItem);
+Vue.use(Dialog);
+Vue.use(Form);
+Vue.use(FormItem);
+Vue.use(Button);
+Vue.use(Input);
+Vue.use(Alert);
+Vue.use(Table);
+Vue.use(TableColumn);
+Vue.use(Container);
+Vue.use(Header);
+Vue.use(Aside);
+Vue.use(Main);
+Vue.use(Radio);
+Vue.use(Loading.directive);
+
+Vue.prototype.$loading = Loading.service;
+
+Vue.prototype.$alert = MessageBox.alert;
+Vue.prototype.$confirm = MessageBox.confirm;
+Vue.prototype.$message = Message;
+
 
 import $ from 'jquery'
 Vue.prototype.$ = $;
@@ -16,13 +81,8 @@ import router from './router/index'
 import vuescroll from 'vuescroll';
 Vue.component('vuescroll', vuescroll);
 
-import {store} from './store/index'
+import { store } from './store/index'
 Vue.config.productionTip = false
-
-import Bomb from 'hydrogen-js-sdk'
-Bomb.initialize('878dfb3e025e2248', '123456', 'fdacd817d9959f0299e91bf400e97f99');
-Vue.prototype.Bomb = Bomb;
-
 
 /* eslint-disable no-new */
 new Vue({

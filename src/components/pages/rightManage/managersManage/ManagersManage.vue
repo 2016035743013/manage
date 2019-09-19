@@ -1,6 +1,6 @@
 <template>
   <div class="managers-manage">
-    <vuescroll>
+    <!-- <vuescroll> -->
       <div class="managers-action">
         <el-button type="primary" @click="addRole">添加</el-button>
         <el-button type="danger" @click="batDelRoel">批量删除</el-button>
@@ -10,7 +10,7 @@
           <el-table-column align="center" type="selection" width="55"></el-table-column>
           <el-table-column align="center" prop="username" label="登陆账号"></el-table-column>
           <el-table-column align="center" prop="nickname" label="昵称"></el-table-column>
-          <el-table-column align="center" prop="mobilePhoneNumber" label="手机号码"></el-table-column>
+          <el-table-column align="center" prop="phone" label="手机号码"></el-table-column>
           <el-table-column align="center" prop="email" label="电子邮箱"></el-table-column>
           <el-table-column align="center" label="更新时间" :show-overflow-tooltip="true">
             <template slot-scope="scope">
@@ -45,24 +45,27 @@
         @confirm="confirm"
         :tableCeilData="tableCeilData"
       />
-    </vuescroll>
+    <!-- </vuescroll> -->
   </div>
 </template>
 <script>
-import { getManagerData, delManager } from '../../../../Api/rightManage/managersManageApi'
-import addOrEdit from './addOrEdit'
-import { Loading } from "element-ui";
+import {
+  getManagerData,
+  delManager
+} from "../../../../Api/rightManage/managersManageApi";
+import addOrEdit from "./addOrEdit";
 export default {
   name: "managersManage",
   components: {
-      addOrEdit
+    addOrEdit
   },
   data() {
     return {
       tableData: [],
       addOrEdit: false,
       title: "",
-      tableCeilData: {}
+      tableCeilData: {},
+      selectData: [] //复选框选中的数据
     };
   },
   methods: {
@@ -96,10 +99,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          for (let i = 0; i < objectIdArr.length; i++) {
-            promiseArr.push(delManager(objectIdArr[i]));
-          }
-          Promise.all(promiseArr).then(() => {
+          delManager(objectIdArr).then(() => {
             this.getData();
             this.$message({
               message: "删除成功",
@@ -123,7 +123,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          delManager(data.objectId).then(res => {
+          delManager([data.objectId]).then(res => {
             this.getData();
             this.$message({
               message: "删除成功",
@@ -148,7 +148,7 @@ export default {
   },
   mounted() {
     this.getData();
-    this.loadingInstance = Loading.service({
+    this.loadingInstance = this.$loading({
       fullscreen: true,
       background: "rgba(0,0,0,0.5)"
     });

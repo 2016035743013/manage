@@ -49,7 +49,7 @@
 </template>
 <script>
 import bus from "../../tools/bus";
-import { resetPwd } from "../../Api/rightManage/managersManageApi";
+import { updatePwd } from "../../Api/login";
 export default {
   name: "managerHeader",
   data() {
@@ -81,15 +81,24 @@ export default {
       this.$refs["formName"].validate(valid => {
         if (valid) {
           let data = {
-            oldPassword: this.rulForm.oldPwd,
-            newPassword: this.rulForm.newPwd
+            oldPwd: this.rulForm.oldPwd,
+            newPwd: this.rulForm.newPwd,
+            objectId: this.userInfo.objectId
           };
-          resetPwd(this.userInfo.objectId, data).then(res => {
-            this.$message({
-              type: 'success',
-              message: '修改密码成功'
-            })
-            this.closePanel();
+          updatePwd(data).then(res => {
+            if (res.code == 200) {
+              this.$message({
+                type: 'success',
+                message: res.msg
+              })
+              this.closePanel();
+            } else {
+              this.$message({
+                type: 'success',
+                message: res.msg
+              })
+            }
+          
           });
         } else {
           return false;

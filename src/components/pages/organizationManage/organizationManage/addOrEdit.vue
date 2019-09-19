@@ -26,7 +26,10 @@
   </div>
 </template>
 <script>
-import { addEditOrganization } from "../../../../Api/organizationManageApi/organizationManageApi";
+import {
+  addOrganization,
+  editOrganization
+} from "../../../../Api/organizationManageApi/organizationManageApi";
 export default {
   name: "addOrEdit",
   data() {
@@ -34,7 +37,7 @@ export default {
       rulForm: {},
       rules: {
         name: [{ required: true, message: "请输入机构名称", trigger: "blur" }],
-        type: [{ required: true, message: "请输入机构类型", trigger: "blur" }],
+        type: [{ required: true, message: "请输入机构类型", trigger: "blur" }]
       }
     };
   },
@@ -62,7 +65,7 @@ export default {
             remark: this.rulForm.remark
           };
           if (this.title == "添加机构") {
-            addEditOrganization(data).then(res => {
+            addOrganization(data).then(res => {
               this.$message({
                 message: "添加成功",
                 type: "success"
@@ -70,8 +73,8 @@ export default {
               this.$emit("confirm", "add");
             });
           } else {
-            data.id = this.tableCeilData.objectId;
-            addEditOrganization(data).then(res => {
+            data.objectId = this.tableCeilData.objectId;
+            editOrganization(data).then(res => {
               this.$message({
                 message: "修改成功",
                 type: "success"

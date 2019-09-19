@@ -1,6 +1,6 @@
 <template>
   <div class="staff-manage">
-    <vuescroll>
+    <!-- <vuescroll> -->
       <div class="staff-action">
         <el-select v-model="organizationVal" @change="selectHandle">
           <el-option v-for="(item, index) in organization" :key="index" :label="item" :value="item"></el-option>
@@ -63,7 +63,7 @@
         @confirm="confirm"
         :tableCeilData="tableCeilData"
       />
-    </vuescroll>
+    <!-- </vuescroll> -->
   </div>
 </template>
 <script>
@@ -75,7 +75,6 @@ import {
 } from "../../../../Api/organizationManageApi/staffManageApi";
 import { getOrganizationData } from "../../../../Api/organizationManageApi/organizationManageApi";
 import addOrEdit from "./addOrEdit";
-import { Loading } from "element-ui";
 export default {
   name: "staffManage",
   data() {
@@ -103,7 +102,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          delStaff(data.objectId).then(res => {
+          delStaff([data.objectId]).then(res => {
             this.getData(this.organizationVal, "");
             this.$message({
               message: "删除成功",
@@ -141,12 +140,16 @@ export default {
       this.getData(this.organizationVal, "");
     },
     getData(organization, keyword) {
-      getStaffData(organization, keyword, this.pageNum).then(res => {
-        this.tableData = res;
+      getStaffData(this.organizationVal, keyword, this.pageNum).then(res => {
+        this.tableData = res.data;
+        if (res.count.length == 0) {
+          this.count = 0;
+        } else {
+          this.count = res.count[0].count;
+        }
         this.$nextTick(() => {
           this.loadingInstance.close();
         });
-        
       });
       getOrganizationData().then(res => {
         this.organization = [];
@@ -154,9 +157,6 @@ export default {
           this.organization[index] = val.name;
         });
         this.organization.unshift("");
-      });
-      getCount().then(res => {
-        this.count = res;
       });
     },
     batDelStaff() {
@@ -175,10 +175,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          for (let i = 0; i < objectIdArr.length; i++) {
-            promiseArr.push(delStaff(objectIdArr[i]));
-          }
-          Promise.all(promiseArr).then(() => {
+          delStaff(objectIdArr).then(() => {
             this.getData("", "");
             this.$message({
               message: "删除成功",
@@ -210,7 +207,7 @@ export default {
     }
   },
   mounted() {
-    this.loadingInstance = Loading.service({
+    this.loadingInstance = this.$loading({
       fullscreen: true,
       background: "rgba(0,0,0,0.5)"
     });

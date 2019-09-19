@@ -1,25 +1,16 @@
-import {
-    getData,
-    addOrEdit,
-    deleteData
-} from './BombHttp'
+import {get, post, del, put} from './http';
+
 function getPositionData(rank) {
-    return getData('positionManage').then(res => {
-        res = res.filter((val) => { 
-            return val.rank.search(rank) != -1;
-        })
-        res.reverse();
-        return res;
-    })
+    return get({data:{rank}, url: '/positionManage'});
 }
 function addPosition(data) {
-    return addOrEdit('positionManage', data);
+    return post({data, url: '/positionManage'});
 }
 function delPosition(id) {
-    return deleteData('positionManage', id);
+    return del({data: {objectId: JSON.stringify(id)}, url: '/positionManage'});
 }
 function editPosition(data) {
-    return addOrEdit('positionManage', data);
+    return put({data, url: '/positionManage'});
 }
 
 export {

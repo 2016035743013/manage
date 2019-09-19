@@ -31,15 +31,18 @@
       </div>
     </div>
     <div class="main-content">
-        <transition
+      <!-- <transition
           name="custom-classes-transition"
           enter-active-class="animated bounceInUp"
           leave-active-class="animated bounceOutUp"
-        >
-          <keep-alive>
-            <router-view></router-view>
-          </keep-alive>
-        </transition>
+      >-->
+
+      <vuescroll :ops="ops" ref="vuescroll">
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
+      </vuescroll>
+      <!-- </transition> -->
     </div>
   </div>
 </template>
@@ -52,6 +55,20 @@ export default {
       ops: {
         bar: {
           background: "#545C64"
+        },
+        vuescroll: {
+          mode: "native",
+          sizeStrategy: "number",
+          detectResize: true
+        },
+        scrollPanel: {
+          initialScrollY: false,
+          initialScrollX: false,
+          scrollingX: false,
+          scrollingY: true,
+          speed: 300,
+          easing: undefined,
+          verticalNativeBarPos: "right"
         }
       }
     };
@@ -115,6 +132,7 @@ export default {
   mounted() {
     this.setAsideHeight();
     this.listenWinResize();
+    const that = this;
   }
 };
 </script>

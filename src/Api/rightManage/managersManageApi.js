@@ -1,23 +1,18 @@
-import {
-    getData,
-    addOrEdit,
-    deleteData
-} from '../organizationManageApi/BombHttp'
+
+
+import {get, post, put, del} from '../organizationManageApi/http'
 
 function getManagerData() {
-    return getData('_User').then(res => {
-        return res;
-    })
+    return get({url: '/managers'});
 }
-function addOrEditManager(data) {
-    return addOrEdit('_User', data).then(res => {
-        return res;
-    })
+function addManager(data) {
+    return post({data, url: '/managers'});
+}
+function editManager(data) {
+    return put({data, url: '/managers'});
 }
 function delManager(id) {
-    return deleteData('_User', id).then(res => {
-        return res;
-    })
+    return del({data: {objectId: JSON.stringify(id)}, url: '/managers'});
 }
 
 function resetPwd(objectId, data) {
@@ -31,7 +26,8 @@ function resetPwd(objectId, data) {
 }
 export {
     getManagerData,
-    addOrEditManager,
+    addManager,
+    editManager,
     delManager,
     resetPwd
 }
