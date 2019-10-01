@@ -6,6 +6,7 @@
       :visible.sync="addOrEdit"
       width="400px"
       :show-close="false"
+      :lock-scroll='true'
     >
       <el-form :model="rulForm" :rules="rules" ref="rulForm" label-width="100px">
         <el-form-item label="姓名" prop="name">

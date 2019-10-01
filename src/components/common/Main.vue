@@ -31,18 +31,13 @@
       </div>
     </div>
     <div class="main-content">
-      <!-- <transition
-          name="custom-classes-transition"
-          enter-active-class="animated bounceInUp"
-          leave-active-class="animated bounceOutUp"
-      >-->
-
       <vuescroll :ops="ops" ref="vuescroll">
-        <keep-alive>
-          <router-view></router-view>
-        </keep-alive>
+        <transition name="fade" mode="out-in">
+          <keep-alive>
+            <router-view></router-view>
+          </keep-alive>
+        </transition>
       </vuescroll>
-      <!-- </transition> -->
     </div>
   </div>
 </template>
@@ -138,4 +133,33 @@ export default {
 </script>
 <style scoped>
 @import "../../../static/css/common/Main.css";
+/* .fade-enter-active {
+  animation: sport 0.5s;
+}
+.fade-leave-active {
+  animation: sport 0.5s reverse;
+}
+@keyframes sport {
+  0% {
+    opacity: 0
+  }
+  100% {
+    opacity: 1
+  }
+} */
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s;
+}
+.fade-leave-to {
+  transform: translateX(100%);
+}
+.fade-enter {
+  transform: translateX(-100%);
+}
+.fade-enter {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+
 </style>
