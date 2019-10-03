@@ -1,6 +1,6 @@
 <template>
   <div class="firstpage">
-    <vuescroll>
+    <vuescroll :ops='ops'>
       <div class="content">
         <div class="content-bar">亲爱的{{userInfo.nickname}}，您好！ 欢迎使用后台管理模板。当前时间为： {{curTime}}</div>
         <div class="content-canshu">
@@ -32,6 +32,25 @@ export default {
       yAxisName: ["数值", "比率"]
     };
     return {
+       ops: {
+        bar: {
+          background: "#545C64"
+        },
+        vuescroll: {
+          mode: "native",
+          sizeStrategy: "number",
+          detectResize: true
+        },
+        scrollPanel: {
+          initialScrollY: false,
+          initialScrollX: false,
+          scrollingX: false,
+          scrollingY: true,
+          speed: 300,
+          easing: undefined,
+          verticalNativeBarPos: "right"
+        }
+      },
       curTime: "",
       canshu: [
         {

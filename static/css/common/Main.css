@@ -12,6 +12,7 @@
     user-select: none;
     border-bottom: 1px solid #ccc;
     box-sizing: border-box;
+    overflow: hidden;
 }
 .tags-container {
     width: 85%;
