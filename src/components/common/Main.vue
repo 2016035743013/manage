@@ -26,11 +26,12 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="closeOthers">关闭其他</el-dropdown-item>
             <el-dropdown-item command="closeAll">关闭所有</el-dropdown-item>
+            <el-dropdown-item command="refreshOne">刷新当前页面</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
     </div>
-    <div class="main-content">
+    <div class="main-content" v-if="reload">
       <vuescroll :ops="ops" ref="vuescroll">
         <transition name="fade" mode="out-in">
           <keep-alive>
@@ -47,6 +48,7 @@ export default {
   data() {
     return {
       activePath: this.$store.getters.getActivePath,
+      reload: true,
       ops: {
         bar: {
           background: "#545C64"
@@ -90,20 +92,27 @@ export default {
     },
     // 关闭标签的操作
     tagsAction(action) {
-      if (this.$store.getters.getRoutes.length == 0) {
-        this.$message("没有可以关闭的窗口了");
-        return;
-      }
-      if (action == "closeOthers") {
-        this.$store.commit("delRoutesItem", {
-          path: this.$store.state.activePath,
-          flag: "other"
-        });
+      if (action == 'refreshOne') {
+        this.reload = false;
+        this.$nextTick().then(() => {
+          this.reload = true;
+        })
       } else {
-        this.$store.state.routes = [];
-        window.localStorage.removeItem("routes");
-        this.$router.push("/");
-        this.$store.commit("setActivePath", "/");
+        if (this.$store.getters.getRoutes.length == 0) {
+          this.$message("没有可以关闭的窗口了");
+          return;
+        }
+        if (action == "closeOthers") {
+          this.$store.commit("delRoutesItem", {
+            path: this.$store.state.activePath,
+            flag: "other"
+          });
+        } else {
+          this.$store.state.routes = [];
+          window.localStorage.removeItem("routes");
+          this.$router.push("/");
+          this.$store.commit("setActivePath", "/");
+        }
       }
     },
     // 点击选项卡
