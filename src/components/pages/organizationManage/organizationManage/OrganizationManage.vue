@@ -13,7 +13,7 @@
           <el-table-column align="center" label="更新时间" :show-overflow-tooltip="true">
             <template slot-scope="scope">
               <i class="el-icon-time"></i>
-              <span>{{ scope.row.updatedAt }}</span>
+              <span>{{ scope.row.updatedAt | updateTime}}</span>
             </template>
           </el-table-column>
           <el-table-column align="center" prop="remark" :show-overflow-tooltip="true" label="备注信息"></el-table-column>

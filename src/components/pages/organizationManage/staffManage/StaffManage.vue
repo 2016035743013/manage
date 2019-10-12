@@ -26,7 +26,7 @@
           <el-table-column align="center" label="更新时间" :show-overflow-tooltip="true">
             <template slot-scope="scope">
               <i class="el-icon-time"></i>
-              <span>{{ scope.row.updatedAt }}</span>
+              <span>{{ scope.row.updatedAt | updateTime }}</span>
             </template>
           </el-table-column>
           <el-table-column label="操作" align="center">

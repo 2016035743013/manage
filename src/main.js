@@ -1,5 +1,7 @@
 import 'babel-polyfill'
 import Vue from 'vue'
+
+// 按需导入图标
 import VeLine from 'v-charts/lib/line.common'
 import histogram from 'v-charts/lib/histogram.common'
 Vue.component(VeLine.name, VeLine);
@@ -7,6 +9,7 @@ Vue.component(histogram.name, histogram);
 
 import App from './App'
 
+// 按需导入element-ui
 import {
   Menu,
   Submenu,
@@ -67,22 +70,30 @@ Vue.use(Radio);
 Vue.use(Loading.directive);
 
 Vue.prototype.$loading = Loading.service;
-
 Vue.prototype.$alert = MessageBox.alert;
 Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$message = Message;
 
-
+// 导入jQuery
 import $ from 'jquery'
 Vue.prototype.$ = $;
 
+// 导入路由
 import router from './router/index'
 
+// 导入滚动条插件
 import vuescroll from 'vuescroll';
 Vue.component('vuescroll', vuescroll);
 
+// 导入vuex
 import { store } from './store/index'
 Vue.config.productionTip = false
+
+// 定义时间的全局过滤器
+Vue.filter('updateTime', function(val) {
+  // console.log(new Date(val).toLocaleString());
+  return new Date(val).toLocaleString();
+})
 
 /* eslint-disable no-new */
 new Vue({
