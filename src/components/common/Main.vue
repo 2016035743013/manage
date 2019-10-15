@@ -31,8 +31,8 @@
         </el-dropdown>
       </div>
     </div>
-    <div class="main-content" v-if="reload">
-      <vuescroll :ops="ops" ref="vuescroll">
+    <div class="main-content" >
+      <vuescroll :ops="ops" ref="vuescroll"  v-if="reload">
         <transition name="fade" mode="out-in">
           <keep-alive>
             <router-view></router-view>
@@ -109,7 +109,7 @@ export default {
           });
         } else {
           this.$store.state.routes = [];
-          window.localStorage.removeItem("routes");
+          window.sessionStorage.removeItem("routes");
           this.$router.push("/");
           this.$store.commit("setActivePath", "/");
         }

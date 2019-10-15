@@ -58,6 +58,7 @@ import {
   batDelPosition
 } from "../../../../Api/organizationManageApi/positionManageApi";
 import addOrEdit from "./addOrEdit";
+import { isSuperAuth } from "../../../../tools/tools";
 export default {
   name: "positionManage",
   data() {
@@ -74,11 +75,17 @@ export default {
   },
   methods: {
     handleEdit(index, data) {
+      if (!isSuperAuth(this)) {
+        return;
+      }
       this.tableCeilData = data;
       this.title = "编辑岗位";
       this.addOrEdit = true;
     },
     handleDelete(index, data) {
+      if (!isSuperAuth(this)) {
+        return;
+      }
       this.$confirm("是否删除该岗位", "提示", {
         type: "warning"
       })
@@ -100,6 +107,9 @@ export default {
     },
     // 添加岗位
     addPosition() {
+      if (!isSuperAuth(this)) {
+        return;
+      }
       this.tableCeilData = {};
       this.title = "添加岗位";
       this.addOrEdit = true;
@@ -129,6 +139,9 @@ export default {
       });
     },
     batDelPosition() {
+      if (!isSuperAuth(this)) {
+        return;
+      }
       let objectIdArr = this.selectData.map(val => {
         return val.objectId;
       });

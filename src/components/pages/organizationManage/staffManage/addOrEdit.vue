@@ -4,11 +4,11 @@
       :title="title"
       :close-on-click-modal="false"
       :visible.sync="addOrEdit"
-      width="400px"
+      width="800px"
       :show-close="false"
-      :lock-scroll='true'
+      :lock-scroll="true"
     >
-      <el-form :model="rulForm" :rules="rules" ref="rulForm" label-width="100px">
+      <el-form :model="rulForm" :rules="rules" ref="rulForm" label-width="100px" :inline="true">
         <el-form-item label="姓名" prop="name">
           <el-input v-model="rulForm.name"></el-input>
         </el-form-item>
@@ -42,12 +42,17 @@
   </div>
 </template>
 <script>
-import { getOrganizationData, editOrganization } from "../../../../Api/organizationManageApi/organizationManageApi";
+import {
+  getOrganizationData,
+  editOrganization
+} from "../../../../Api/organizationManageApi/organizationManageApi";
 import {
   addStaff,
   editStaff
 } from "../../../../Api/organizationManageApi/staffManageApi";
 import { getPositionData } from "../../../../Api/organizationManageApi/positionManageApi";
+import { execPhoneEmail } from '../../../../tools/tools'
+
 export default {
   name: "addOrEdit",
   data() {
@@ -62,7 +67,7 @@ export default {
         ],
         phone: [{ required: true, message: "请输入手机号码", trigger: "blur" }],
         email: [{ required: true, message: "请输入邮箱", trigger: "blur" }]
-      }
+      },
     };
   },
   props: [
@@ -89,6 +94,10 @@ export default {
             phone: this.rulForm.phone,
             rank: this.rulForm.rank
           };
+           // 检测邮箱和手机号
+          if (!execPhoneEmail(this.rulForm.phone, this.rulForm.email, this)) {
+            return;
+          }
           if (this.title == "添加员工") {
             addStaff(data).then(res => {
               this.$message({

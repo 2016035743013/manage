@@ -13,13 +13,13 @@ export default {
   },
   mounted() {
     // console.log();
-    if (!window.localStorage.getItem("bmob")) {
+    if (!window.sessionStorage.getItem("manager")) {
       this.$router.push("/login");
     }
     // console.log();
-    let routes = window.localStorage.getItem("routes");
-    let activePath = window.localStorage.getItem('activePath');
-    let userInfo = window.localStorage.getItem('bmob');
+    let routes = window.sessionStorage.getItem("routes");
+    let activePath = window.sessionStorage.getItem('activePath');
+    let userInfo = window.sessionStorage.getItem('manager');
     if (routes) {
       this.$store.commit("setRoutes", JSON.parse(routes));
     }

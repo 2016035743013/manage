@@ -2,7 +2,7 @@
   <div class="staff-manage">
     <!-- <vuescroll> -->
       <div class="staff-action">
-        <el-select v-model="organizationVal" @change="selectHandle">
+        <el-select ref="select" v-model="organizationVal" @change="selectHandle">
           <el-option v-for="(item, index) in organization" :key="index" :label="item" :value="item"></el-option>
         </el-select>
         <el-input
@@ -74,6 +74,7 @@ import {
   getCount
 } from "../../../../Api/organizationManageApi/staffManageApi";
 import { getOrganizationData } from "../../../../Api/organizationManageApi/organizationManageApi";
+import { isSuperAuth } from "../../../../tools/tools";
 import addOrEdit from "./addOrEdit";
 export default {
   name: "staffManage",
@@ -93,11 +94,17 @@ export default {
   },
   methods: {
     handleEdit(index, data) {
+      if (!isSuperAuth(this)) {
+        return;
+      }
       this.tableCeilData = data;
       this.title = "修改员工信息";
       this.addOrEdit = true;
     },
     handleDelete(index, data) {
+      if (!isSuperAuth(this)) {
+        return;
+      }
       this.$confirm("是否删除该员工", "提示", {
         type: "warning"
       })
@@ -118,6 +125,9 @@ export default {
     },
     // 添加岗位
     addStaff() {
+      if (!isSuperAuth(this)) {
+        return;
+      }
       this.tableCeilData = {};
       this.title = "添加员工";
       this.addOrEdit = true;
@@ -160,6 +170,9 @@ export default {
       });
     },
     batDelStaff() {
+      if (!isSuperAuth(this)) {
+        return;
+      }
       let objectIdArr = this.selectData.map(val => {
         return val.objectId;
       });
@@ -206,12 +219,14 @@ export default {
       this.getData("", "");
     }
   },
+  created() {
+    this.getData("", "");
+  },
   mounted() {
     this.loadingInstance = this.$loading({
       fullscreen: true,
       background: "rgba(0,0,0,0.5)"
     });
-    this.getData("", "");
   },
   components: {
     addOrEdit

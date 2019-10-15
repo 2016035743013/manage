@@ -1,6 +1,6 @@
 
 
-import {get, post, put, del} from '../organizationManageApi/http'
+import { get, post, del, put } from '../../tools/https';
 
 function getManagerData() {
     return get({url: '/managers'});

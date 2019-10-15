@@ -10,7 +10,7 @@
           <i slot="suffix" class="el-input__icon el-icon-lock"></i>
         </el-input>
         <el-button @click="login" type="primary" style="width: 100%;">登录</el-button>
-        <el-alert title="用户名：root，密码：root" type="info" :closable="false"></el-alert>
+        <el-alert title="用户名：test，密码：test" type="info" :closable="false"></el-alert>
       </div>
     </div>
   </div>
@@ -46,7 +46,7 @@ export default {
         console.log(res);
         if (res.code == "200") {
           this.$store.commit("setUserInfo", res.data[0]);
-          window.localStorage.setItem('bmob', JSON.stringify(res.data[0]));
+          window.sessionStorage.setItem('manager', JSON.stringify(res.data[0]));
           this.$router.push("/");
         } else {
           this.$alert(res.msg, "提示", {
@@ -55,19 +55,6 @@ export default {
           });
         }
       });
-      // Bmob.User.login(this.username, this.password)
-      //   .then(res => {
-      //     //   console.log(res);
-      //     this.$store.commit("setUserInfo", res);
-      //     this.$router.push("/");
-      //   })
-      //   .catch(err => {
-      //     //   console.log(err);
-      //     this.$alert("用户名或密码错误，请重新输入！！！", "提示", {
-      //       type: "warning",
-      //       callback: action => {}
-      //     });
-      //   });
     },
     setWinHeight() {
       let winHeight = this.$(window).height();

@@ -1,4 +1,4 @@
-import {get, post, put, del} from './http'
+import { get, post, del, put } from '../../tools/https';
 
 function getStaffData(organization, keyword,pageNum) {
     return get({data: {name: keyword, rank: organization, pageNum: pageNum}, url: '/staffManage'});

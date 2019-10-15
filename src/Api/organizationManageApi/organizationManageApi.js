@@ -1,5 +1,5 @@
 
-import { get, post, del, put } from './http';
+import { get, post, del, put } from '../../tools/https';
 function getOrganizationData() {
     return get({ url: '/organizationManage' })
 }

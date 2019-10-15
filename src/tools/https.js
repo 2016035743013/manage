@@ -1,26 +1,46 @@
 import $ from 'jquery'
-import config from './config'
-function http(option) {
+let baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:8008' : 'http://39.105.8.57:8008';
+function ajax(option) {
     return new Promise((resolve, rejected) => {
         $.ajax({
-            url: config.baseUrl + option.url,
             type: option.type,
-            data: option.data,
             async: option.async,
-            success: (res) => {
+            url: baseUrl + option.url,
+            data: option.data,
+            success: function(res) {
                 resolve(res);
             },
-            error: (err) => {
+            error: function(err) {
                 rejected(err);
             }
         })
     })
 }
+
 function get(option) {
-    console.log(option);
     option.type = 'get';
-    return http(option);
+    return ajax(option);
 }
-export default{
-    get
+
+function post(option) {
+    option.type = 'post';
+    return ajax(option);
+}
+
+function del(option) {
+    option.type = 'delete';
+    console.log(option);
+    return ajax(option);
+}
+
+function put(option) {
+    option.type = 'put';
+    return ajax(option);
+}
+
+export {
+    get,
+    post,
+    del,
+    put
 }

@@ -53,6 +53,7 @@ import {
   delOrganization
 } from "../../../../Api/organizationManageApi/organizationManageApi";
 import addOrEdit from "./addOrEdit";
+import { isSuperAuth } from "../../../../tools/tools";
 export default {
   name: "organizationManage",
   data() {
@@ -66,11 +67,17 @@ export default {
   },
   methods: {
     addOrganization() {
+      if (!isSuperAuth(this)) {
+        return;
+      }
       this.tableCeilData = {};
       this.title = "添加机构";
       this.addOrEdit = true;
     },
     batDelOrganization() {
+      if (!isSuperAuth(this)) {
+        return;
+      }
       let objectIdArr = this.selectData.map(val => {
         return val.objectId;
       });
@@ -100,11 +107,17 @@ export default {
       this.selectData = data;
     },
     handleEdit(index, data) {
+      if (!isSuperAuth(this)) {
+        return;
+      }
       this.title = "修改机构";
       this.tableCeilData = data;
       this.addOrEdit = true;
     },
     handleDelete(index, data) {
+      if (!isSuperAuth(this)) {
+        return;
+      }
       this.$confirm("是否删除该机构", "提示", {
         type: "warning"
       })

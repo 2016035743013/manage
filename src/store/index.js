@@ -29,7 +29,7 @@ let store = new Vuex.Store({
             }
             state.routes.push(obj);
             store.commit('setActivePath', obj.path);
-            window.localStorage.setItem('routes', JSON.stringify(state.routes));
+            window.sessionStorage.setItem('routes', JSON.stringify(state.routes));
         },
         // 关闭路由
         delRoutesItem(state, obj) {
@@ -57,7 +57,7 @@ let store = new Vuex.Store({
                 });
             }
             state.routes = temp;
-            window.localStorage.setItem('routes', JSON.stringify(state.routes));
+            window.sessionStorage.setItem('routes', JSON.stringify(state.routes));
         },
         setRoutes(state, val) {
             state.routes = val;
@@ -65,7 +65,7 @@ let store = new Vuex.Store({
         // 设置被选中的路由路径
         setActivePath(state, val) {
             state.activePath = val;
-            window.localStorage.setItem('activePath', val);
+            window.sessionStorage.setItem('activePath', val);
         },
         // 设置用户信息
         setUserInfo(state, obj) {

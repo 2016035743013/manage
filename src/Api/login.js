@@ -1,4 +1,4 @@
-import {post} from './organizationManageApi/http'
+import {post} from '../tools/https'
 
 function login(data) {
     return post({data, url: '/login'});

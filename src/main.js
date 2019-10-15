@@ -40,8 +40,12 @@ import {
   pagination,
   Option,
   Loading,
+  Checkbox,
+  CheckboxGroup,
 } from 'element-ui';
 Vue.use(Menu);
+Vue.use(Checkbox);
+Vue.use(CheckboxGroup);
 Vue.use(Select);
 Vue.use(pagination);
 Vue.use(Option);
@@ -91,7 +95,6 @@ Vue.config.productionTip = false
 
 // 定义时间的全局过滤器
 Vue.filter('updateTime', function(val) {
-  // console.log(new Date(val).toLocaleString());
   return new Date(val).toLocaleString();
 })
 

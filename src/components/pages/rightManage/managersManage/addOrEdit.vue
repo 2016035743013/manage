@@ -4,10 +4,11 @@
       :title="title"
       :close-on-click-modal="false"
       :visible.sync="addOrEdit"
-      width="400px"
+      width="800px"
       :show-close="false"
+      top="10"
     >
-      <el-form :model="rulForm" :rules="rules" ref="rulForm" label-width="100px">
+      <el-form :model="rulForm" :rules="rules" ref="rulForm" label-width="100px" :inline="true">
         <el-form-item label="登陆账号" prop="username">
           <el-input v-model="rulForm.username"></el-input>
         </el-form-item>
@@ -23,6 +24,23 @@
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="rulForm.email" placeholder="请输入邮箱"></el-input>
         </el-form-item>
+
+        <br />
+        <el-form-item label="数据权限">
+          <el-checkbox
+            :indeterminate="isIndeterminate"
+            v-model="checkAll"
+            @change="handleCheckAllChange"
+          >全选</el-checkbox>
+          <br />
+          <el-checkbox-group v-model="checkOrganization" @change="handleCheckedChange">
+            <el-checkbox :label="item" v-for="(item, index) in organization" :key="index">{{item}}</el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+        <el-form-item label="系统管理员">
+          <el-radio v-model="superAuth" label="1">是</el-radio>
+          <el-radio v-model="superAuth" label="0">否</el-radio>
+        </el-form-item>
       </el-form>
       <div slot="footer">
         <el-button @click="closePanel">取消</el-button>
@@ -36,6 +54,8 @@ import {
   addManager,
   editManager
 } from "../../../../Api/rightManage/managersManageApi";
+import { getOrganizationData } from "../../../../Api/organizationManageApi/organizationManageApi";
+import {execPhoneEmail} from '../../../../tools/tools'
 export default {
   name: "addOrEdit",
   data() {
@@ -47,7 +67,12 @@ export default {
         nickname: [{ required: true, message: "请选择昵称", trigger: "blur" }],
         phone: [{ required: true, message: "请输入手机号码", trigger: "blur" }],
         email: [{ required: true, message: "请输入电子邮箱", trigger: "blur" }]
-      }
+      },
+      organization: [],
+      checkAll: false, //全选
+      isIndeterminate: false, //用以表示 checkbox 的不确定状态，一般用于实现全选的效果,
+      checkOrganization: [], // 被选中的数据权限
+      superAuth: "0" //是否设置为系统管理员，0代表不是，1代表是的。
     };
   },
   props: [
@@ -58,6 +83,14 @@ export default {
   watch: {
     tableCeilData(val) {
       this.rulForm = val;
+      this.checkOrganization = [];
+      this.superAuth = "0";
+      this.handleCheckedChange();
+      if (val.auth) {
+        this.checkOrganization = val.auth.split(",");
+        this.superAuth = val.superAuth;
+        this.handleCheckedChange();
+      }
     }
   },
   methods: {
@@ -71,9 +104,17 @@ export default {
             username: this.rulForm.username,
             nickname: this.rulForm.nickname,
             phone: this.rulForm.phone,
-            email: this.rulForm.email
+            email: this.rulForm.email,
+            auth: this.checkOrganization.join(","),
+            superAuth: this.superAuth
           };
-          if (this.title == "添加管理员") {
+
+          // 检测邮箱和手机号
+          if (!execPhoneEmail(this.rulForm.phone, this.rulForm.email, this)) {
+            return;
+          }
+
+          if (this.title === "添加管理员") {
             data.password = this.rulForm.password;
             addManager(data)
               .then(res => {
@@ -103,7 +144,33 @@ export default {
           return false;
         }
       });
+    },
+    
+    //数据的是否全选
+    handleCheckAllChange(val) {
+      console.log(val);
+      this.isIndeterminate = false;
+      this.checkOrganization = val ? this.organization : [];
+    },
+    // 选中单个选项的事件触发
+    handleCheckedChange() {
+      this.isIndeterminate =
+        this.checkOrganization.length < this.organization.length &&
+        this.checkOrganization.length > 0;
+      this.checkAll =
+        this.checkOrganization.length === this.organization.length;
+    },
+    getData() {
+      getOrganizationData().then(res => {
+        this.organization = [];
+        res.map((val, index) => {
+          this.organization[index] = val.name;
+        });
+      });
     }
+  },
+  created() {
+    this.getData();
   },
   mounted() {}
 };

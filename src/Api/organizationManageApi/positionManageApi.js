@@ -1,4 +1,4 @@
-import {get, post, del, put} from './http';
+import { get, post, del, put } from '../../tools/https';
 
 function getPositionData(rank) {
     return get({data:{rank}, url: '/positionManage'});

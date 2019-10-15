@@ -136,9 +136,9 @@ export default {
       // console.log(val);
       if (val == "logout") {
         // console.log("logout");
-        window.localStorage.removeItem("activePath");
-        window.localStorage.removeItem("routes");
-        window.localStorage.removeItem('bmob');
+        window.sessionStorage.removeItem("activePath");
+        window.sessionStorage.removeItem("routes");
+        window.sessionStorage.removeItem('manager');
         this.$store.state.routes = [];
         this.$store.state.activePath = "/";
         this.$router.push("/login");

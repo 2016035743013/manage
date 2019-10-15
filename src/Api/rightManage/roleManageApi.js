@@ -1,5 +1,5 @@
 
-import {get, post, put, del} from '../organizationManageApi/http'
+import { get, post, del, put } from '../../tools/https';
 function getRoleData() {
     return get({url: '/rolemanage'});
 }
