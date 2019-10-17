@@ -51,8 +51,8 @@ import {
   editStaff
 } from "../../../../Api/organizationManageApi/staffManageApi";
 import { getPositionData } from "../../../../Api/organizationManageApi/positionManageApi";
-import { execPhoneEmail } from '../../../../tools/tools'
-
+import { execPhoneEmail } from "../../../../tools/tools";
+import {mapState} from 'vuex';
 export default {
   name: "addOrEdit",
   data() {
@@ -67,7 +67,7 @@ export default {
         ],
         phone: [{ required: true, message: "请输入手机号码", trigger: "blur" }],
         email: [{ required: true, message: "请输入邮箱", trigger: "blur" }]
-      },
+      }
     };
   },
   props: [
@@ -75,6 +75,9 @@ export default {
     "title",
     "tableCeilData"
   ],
+  computed: {
+    ...mapState(['userInfo'])
+  },
   watch: {
     tableCeilData(val) {
       this.rulForm = val;
@@ -94,7 +97,7 @@ export default {
             phone: this.rulForm.phone,
             rank: this.rulForm.rank
           };
-           // 检测邮箱和手机号
+          // 检测邮箱和手机号
           if (!execPhoneEmail(this.rulForm.phone, this.rulForm.email, this)) {
             return;
           }
@@ -122,17 +125,26 @@ export default {
       });
     },
     getData() {
-      getOrganizationData().then(res => {
-        this.organization = [];
-        res.map((val, index) => {
-          this.organization[index] = val.name;
-        });
-      });
       getPositionData("").then(res => {
         this.rank = [];
         res.map((val, index) => {
           this.rank[index] = val.name;
         });
+      });
+    }
+  },
+  created() {
+    if (this.userInfo.superAuth === "0") {
+      this.organization = [];
+      this.organization = this.userInfo.auth.split(",");
+      this.organizationVal = this.organization[0];
+    } else {
+      getOrganizationData().then(res => {
+        this.organization = [];
+        res.map((val, index) => {
+          this.organization[index] = val.name;
+        });
+        this.organization.unshift("");
       });
     }
   },

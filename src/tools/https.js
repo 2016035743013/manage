@@ -1,5 +1,5 @@
 import $ from 'jquery'
-let baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:8008' : 'http://39.105.8.57:8008';
+let baseUrl = process.env.NODE_ENV !== 'development' ? 'http://localhost:8008' : 'http://39.105.8.57:8008';
 function ajax(option) {
     return new Promise((resolve, rejected) => {
         $.ajax({
