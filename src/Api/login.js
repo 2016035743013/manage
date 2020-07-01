@@ -7,11 +7,12 @@ function login(data) {
 function updatePwd(data) {
     return post({data, url: '/login/updatePwd'});
 }
-
+//fetastfdsafdsf
 export {
     login,
     updatePwd
 }
+///tet fsafds
 
 
 
