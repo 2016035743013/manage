@@ -7,7 +7,7 @@ function login(data) {
 function updatePwd(data) {
     return post({data, url: '/login/updatePwd'});
 }
-
+////fdsafsd
 export {
     login,
     updatePwd
